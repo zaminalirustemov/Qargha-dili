@@ -31,7 +31,6 @@ import az.lahza.qarghadili.R
 import az.lahza.qarghadili.ui.state.SnackState
 import az.lahza.qarghadili.ui.theme.AccentOrange
 import az.lahza.qarghadili.ui.theme.Dimens
-import az.lahza.qarghadili.ui.theme.MainBlue
 import kotlinx.coroutines.delay
 
 /**
