@@ -16,3 +16,14 @@ package az.lahza.qarghadili.extensions
  * @return An empty string.
  */
 fun String.Companion.empty() = ""
+
+/**
+ * Extension function to check if the StringBuilder contains any vowels.
+ *
+ * This function iterates through the characters of the StringBuilder and checks if any character
+ * is a vowel (using the provided `vowels` string).
+ *
+ * @param vowels A string containing the vowels to check against.
+ * @return `true` if any character in the StringBuilder is a vowel, otherwise `false`.
+ */
+fun StringBuilder.containsAnyVowel(vowels: String) = this.any { it.isVowel(vowels) }
