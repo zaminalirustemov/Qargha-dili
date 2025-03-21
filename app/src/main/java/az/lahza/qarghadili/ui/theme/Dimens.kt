@@ -33,6 +33,7 @@ object Dimens {
     val _32DP = 32.dp
     val _50DP = 50.dp
     val _56DP = 56.dp
+    val _120DP = 120.dp
     val _150DP = 150.dp
 
     val _12SP = 12.sp

@@ -42,7 +42,7 @@ fun ContentInputField(content: String, onValueChange: (String) -> Unit) {
     )
 
     val labelTextStyle = TextStyle(
-        fontSize = Dimens._14SP,
+        fontSize = Dimens._12SP,
         fontFamily = FontFamily(Font(R.font.poppins_medium)),
         color = TextColor
     )

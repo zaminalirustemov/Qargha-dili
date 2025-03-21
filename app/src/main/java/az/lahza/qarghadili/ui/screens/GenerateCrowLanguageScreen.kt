@@ -1,5 +1,7 @@
 package az.lahza.qarghadili.ui.screens
 
+import android.content.Intent
+import android.speech.tts.TextToSpeech
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -26,6 +28,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,9 +38,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -52,13 +57,11 @@ import az.lahza.qarghadili.ui.components.snack.rememberSnackState
 import az.lahza.qarghadili.ui.theme.AccentGold
 import az.lahza.qarghadili.ui.theme.AccentOrange
 import az.lahza.qarghadili.ui.theme.BorderGray
-import az.lahza.qarghadili.ui.theme.DarkAccentOrange
 import az.lahza.qarghadili.ui.theme.DarkBackground
-import az.lahza.qarghadili.ui.theme.DarkBorderGray
 import az.lahza.qarghadili.ui.theme.Dimens
-import az.lahza.qarghadili.ui.theme.MainBlue
 import az.lahza.qarghadili.ui.theme.TextColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,12 +77,17 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
 
+    val textToSpeech = remember { TextToSpeech(context) {} }
+    textToSpeech.language = Locale("tr", "TR")
+
+
     // State management
     var content by remember { mutableStateOf(String.empty()) }
     var customLanguage by remember { mutableStateOf(String.empty()) }
     // Initialize crowLanguageText
     var crowLanguageText by remember { mutableStateOf(String.empty()) }
 
+    val clipboardManager = LocalClipboardManager.current
 
     var qaButtonClicked by remember { mutableStateOf(true) }
     var zaButtonClicked by remember { mutableStateOf(false) }
@@ -115,9 +123,9 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                     horizontalArrangement = Arrangement.spacedBy(Dimens._16DP),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    CrownLanguageButton(modifier = Modifier.weight(0.5f),
-                        normalColor = if (qaButtonClicked) AccentOrange else BorderGray,
-                        pressedColor = if (qaButtonClicked) DarkAccentOrange else DarkBorderGray,
+                    CrownLanguageButton(
+                        modifier = Modifier.weight(0.5f),
+                        enabled = qaButtonClicked,
                         text = stringResource(R.string.qa_qe),
                         fontSize = 16.sp,
                         onClick = {
@@ -126,9 +134,9 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                             customButtonClicked = false
                         })
 
-                    CrownLanguageButton(modifier = Modifier.weight(0.5f),
-                        normalColor = if (zaButtonClicked) AccentOrange else BorderGray,
-                        pressedColor = if (zaButtonClicked) DarkAccentOrange else DarkBorderGray,
+                    CrownLanguageButton(
+                        modifier = Modifier.weight(0.5f),
+                        enabled = zaButtonClicked,
                         text = stringResource(R.string.za_ze),
                         fontSize = 16.sp,
                         onClick = {
@@ -136,9 +144,9 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                             qaButtonClicked = false
                             customButtonClicked = false
                         })
-                    CrownLanguageButton(modifier = Modifier.weight(1f),
-                        normalColor = if (customButtonClicked) AccentOrange else BorderGray,
-                        pressedColor = if (customButtonClicked) DarkAccentOrange else DarkBorderGray,
+                    CrownLanguageButton(
+                        modifier = Modifier.weight(1f),
+                        enabled = customButtonClicked,
                         text = stringResource(R.string.s_n_ist_y_n_olsun),
                         fontSize = 16.sp,
                         onClick = {
@@ -150,7 +158,7 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
 
 
                 val labelTextStyle = TextStyle(
-                    fontSize = Dimens._14SP,
+                    fontSize = Dimens._12SP,
                     fontFamily = FontFamily(Font(R.font.poppins_medium)),
                     color = TextColor
                 )
@@ -201,7 +209,7 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                     onValueChange = {},
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(Dimens._150DP),
+                        .height(Dimens._120DP),
                     shape = RoundedCornerShape(Dimens.ExtraLarge),
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Text // Make sure to use a text keyboard
@@ -217,6 +225,82 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                     ),
                     readOnly = true
                 )
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = Dimens.ExtraLarge),
+                    horizontalArrangement = Arrangement.spacedBy(Dimens._16DP),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    CrownLanguageButton(
+                        modifier = Modifier.weight(0.2f),
+                        icon = R.drawable.ic_file_copy,
+                        onClick = {
+                            if (crowLanguageText.isBlank()) {
+                                errorSnackState.showSnack(context.getString(R.string.qar_a_dilind_evirilmi_m_tn_yoxdur))
+                            } else {
+                                clipboardManager.setText(AnnotatedString(crowLanguageText))
+                                successSnackState.showSnack(context.getString(R.string.koyalad_n_getdi))
+                            }
+                        },
+                        enabled = crowLanguageText.isNotBlank()
+                    )
+
+
+                    CrownLanguageButton(
+                        modifier = Modifier.weight(0.2f),
+                        icon = R.drawable.baseline_mic_none_24,
+                        onClick = {
+                            if (crowLanguageText.isBlank()) {
+                                errorSnackState.showSnack(context.getString(R.string.qar_a_dilind_evirilmi_m_tn_yoxdur))
+                            } else {
+                                val convertedText = convertToTurkish(crowLanguageText)
+
+                                textToSpeech.speak(
+                                    convertedText,
+                                    TextToSpeech.QUEUE_FLUSH,
+                                    null,
+                                    null
+                                )
+                            }
+                        },
+                        enabled = crowLanguageText.isNotBlank()
+                    )
+
+                    CrownLanguageButton(
+                        modifier = Modifier.weight(0.85f),
+                        text = stringResource(R.string.yolla_getsin),
+                        fontSize = 16.sp,
+                        onClick = {
+                            if (crowLanguageText.isBlank()) {
+                                errorSnackState.showSnack(context.getString(R.string.qar_a_dilind_evirilmi_m_tn_yoxdur))
+                            } else {
+                                val shareIntent = Intent().apply {
+                                    action = Intent.ACTION_SEND
+                                    putExtra(Intent.EXTRA_TEXT, crowLanguageText)
+                                    type = "text/plain"
+                                }
+                                context.startActivity(
+                                    Intent.createChooser(
+                                        shareIntent,
+                                        "Share via"
+                                    )
+                                )
+
+                            }
+                        },
+                        enabled = crowLanguageText.isNotBlank()
+                    )
+                }
+
+                DisposableEffect(Unit) {
+                    onDispose {
+                        textToSpeech.stop()
+                        textToSpeech.shutdown()
+                    }
+                }
             }
 
 
@@ -226,6 +310,7 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
             ) {
                 if (content.isBlank()) {
                     errorSnackState.showSnack(context.getString(R.string.empty_content))
+                    crowLanguageText = String.empty()
                 } else {
                     crowLanguageText =
                         convertToCrowLanguage(
@@ -245,7 +330,7 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
         )
 
         AlertSnack(
-            state = successSnackState, containerColor = MainBlue
+            state = successSnackState, containerColor = AccentOrange
         )
     }
 }
@@ -287,4 +372,10 @@ fun convertToCrowLanguage(
 // Extension function to check if a character is a vowel
 fun Char.isVowel(vowels: String): Boolean {
     return this in vowels
+}
+
+
+fun convertToTurkish(text: String): String {
+    return text.replace("q", "g")
+        .replace("ə", "e")
 }
