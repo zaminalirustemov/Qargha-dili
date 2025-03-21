@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import az.lahza.qarghadili.R
 import az.lahza.qarghadili.ui.state.SnackState
+import az.lahza.qarghadili.ui.theme.AccentOrange
 import az.lahza.qarghadili.ui.theme.Dimens
 import az.lahza.qarghadili.ui.theme.MainBlue
 import kotlinx.coroutines.delay
@@ -55,7 +56,7 @@ import kotlinx.coroutines.delay
 fun AlertSnack(
     state: SnackState,
     duration: Long = 3000L,
-    containerColor: Color = MainBlue,
+    containerColor: Color = AccentOrange,
     contentColor: Color = Color.White,
     verticalPadding: Dp = Dimens.ExtraLarge,
     horizontalPadding: Dp = Dimens.ExtraLarge,
