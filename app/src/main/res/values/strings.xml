@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Qarğa dili</string>
+    <string name="no_message_provided">No message provided</string>
+    <string name="qargha_dili_generator">🐦‍⬛ Qarğa Dili Generator 🐦‍⬛</string>
+    <string name="metn_daxil_edin">Mətn daxil edin:</string>
+    <string name="qargha_dili_aciqlamasi">Qarğa dili kodlaşdırılmış və ya şifrəli danışıq üsuludur. Bu dilin əsas məqsədi sözləri elə dəyişməkdir ki, yalnız onu bilən şəxslər anlaya bilsin.</string>
+    <string name="chevir">Çevir</string>
+    <string name="empty_content">Mətn yeri boş ola bilməz</string>
 </resources>
