@@ -98,7 +98,10 @@ fun ContentInputField(content: String, onValueChange: (String) -> Unit) {
                 cursorColor = AccentGold,
                 focusedTextColor = TextColor,
                 unfocusedTextColor = TextColor
-            )
+            ),
+            placeholder = {
+                Text(stringResource(R.string.nec_d_g_z_l_t_tbiqdir))
+            }
         )
     }
 }

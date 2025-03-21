@@ -26,15 +26,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import az.lahza.qarghadili.R
 import az.lahza.qarghadili.ui.theme.AccentOrange
+import az.lahza.qarghadili.ui.theme.DarkAccentOrange
 import az.lahza.qarghadili.ui.theme.TextColor
 
 
 @Composable
-fun GenerateCrownLanguageButton(
+fun CrownLanguageButton(
     modifier: Modifier,
     text: String = stringResource(R.string.chevir),
     normalColor: Color = AccentOrange,
-    pressedColor: Color = Color(0xFFC56C16),
+    pressedColor: Color = DarkAccentOrange,
     textColor: Color = TextColor,
     fontSize: TextUnit = 22.sp,
     cornerRadius: Dp = 8.dp,

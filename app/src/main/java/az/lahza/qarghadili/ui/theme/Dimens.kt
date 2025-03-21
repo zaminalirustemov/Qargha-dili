@@ -14,12 +14,6 @@ import androidx.compose.ui.unit.sp
  *  MediumLarge = 8.dp
  *  Large ======= 10.dp
  *  ExtraLarge == 12.dp
- *  _2XLarge ==== 14.dp
- *  _3XLarge ==== 16.dp
- *  _4XLarge ==== 18.dp
- *  _5XLarge ==== 20.dp
- *  _6XLarge ==== 22.dp
- *  _7XLarge ==== 24.dp
  * ```
  */
 object Dimens {

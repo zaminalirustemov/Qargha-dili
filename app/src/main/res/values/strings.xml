@@ -6,4 +6,10 @@
     <string name="qargha_dili_aciqlamasi">Qarğa dili kodlaşdırılmış və ya şifrəli danışıq üsuludur. Bu dilin əsas məqsədi sözləri elə dəyişməkdir ki, yalnız onu bilən şəxslər anlaya bilsin.</string>
     <string name="chevir">Çevir</string>
     <string name="empty_content">Mətn yeri boş ola bilməz</string>
+    <string name="evirilmi_m_tn">Qarğa dilinə çevirilmiş mətn:</string>
+    <string name="qa_qe">qa/qə</string>
+    <string name="za_ze">za/zə</string>
+    <string name="s_n_ist_y_n_olsun">Sən istəyən olsun</string>
+    <string name="bu_i_n_ad_ver_k_indi">Bu işə nə ad verək indi?</string>
+    <string name="nec_d_g_z_l_t_tbiqdir">Məsələn: Necə də gözəl tətbiqdir.</string>
 </resources>
