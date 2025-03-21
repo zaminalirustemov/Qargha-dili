@@ -27,26 +27,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import az.lahza.qarghadili.R
 import az.lahza.qarghadili.ui.theme.AccentOrange
 import az.lahza.qarghadili.ui.theme.BorderGray
 import az.lahza.qarghadili.ui.theme.DarkAccentOrange
 import az.lahza.qarghadili.ui.theme.DarkBorderGray
+import az.lahza.qarghadili.ui.theme.Dimens
 import az.lahza.qarghadili.ui.theme.TextColor
 
 @Composable
 fun CrownLanguageButton(
     modifier: Modifier,
     icon: Int? = null,
-    text: String = stringResource(R.string.chevir),
+    text: String = stringResource(R.string.convert_button_label),
     normalColor: Color = AccentOrange,
     pressedColor: Color = DarkAccentOrange,
     textColor: Color = TextColor,
-    fontSize: TextUnit = 18.sp,
-    cornerRadius: Dp = 8.dp,
-    offset: Dp = 6.dp,
+    fontSize: TextUnit = Dimens._18SP,
+    cornerRadius: Dp = Dimens.MediumLarge,
+    offset: Dp = Dimens.Medium,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -116,10 +115,10 @@ fun CrownLanguageButton(
                     contentDescription = null,
                     tint = TextColor,
                     modifier = Modifier
-                        .size(52.dp)
-                        .padding(14.dp)
+                        .size(Dimens._52DP)
+                        .padding(Dimens._14DP)
                         .align(Alignment.Center)
-                        .offset(y = if (isPressed) 0.dp else (-offset / 2))
+                        .offset(y = if (isPressed) Dimens.Zero else (-offset / 2))
                 )
             } else {
                 Text(
@@ -129,11 +128,11 @@ fun CrownLanguageButton(
                     fontWeight = FontWeight.Bold,
                     color = textColor,
                     modifier = Modifier
-                        .padding(top = 16.dp, bottom = 16.dp)
+                        .padding(top = Dimens._16DP, bottom = Dimens._16DP)
                         .align(Alignment.Center)
                         .offset(
-                            x = 0.dp,
-                            y = if (isPressed) 0.dp else (-offset / 2)
+                            x = Dimens.Zero,
+                            y = if (isPressed) Dimens.Zero else (-offset / 2)
                         )
                 )
             }

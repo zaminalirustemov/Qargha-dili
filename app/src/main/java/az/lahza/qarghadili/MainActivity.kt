@@ -10,8 +10,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import az.lahza.qarghadili.ui.screens.GenerateCrowLanguageScreen
+import az.lahza.qarghadili.ui.theme.Dimens
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +33,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun HomeScreenPreview() {
     GenerateCrowLanguageScreen(
-        innerPadding = PaddingValues(0.dp)
+        innerPadding = PaddingValues(Dimens.Zero)
     )
 }

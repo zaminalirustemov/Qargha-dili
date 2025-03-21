@@ -64,7 +64,7 @@ fun ContentInputField(content: String, onValueChange: (String) -> Unit) {
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(R.string.qargha_dili_aciqlamasi),
+                text = stringResource(R.string.qargha_dili_description),
                 modifier = Modifier.padding(bottom = Dimens.MediumLarge),
                 style = labelTextStyle,
                 textAlign = TextAlign.Center
@@ -74,7 +74,7 @@ fun ContentInputField(content: String, onValueChange: (String) -> Unit) {
         Spacer(modifier = Modifier.height(Dimens._20DP))
 
         Text(
-            text = stringResource(R.string.metn_daxil_edin),
+            text = stringResource(R.string.enter_text_prompt),
             modifier = Modifier.padding(bottom = Dimens.MediumLarge),
             style = labelTextStyle,
         )
@@ -100,7 +100,7 @@ fun ContentInputField(content: String, onValueChange: (String) -> Unit) {
                 unfocusedTextColor = TextColor
             ),
             placeholder = {
-                Text(stringResource(R.string.nec_d_g_z_l_t_tbiqdir))
+                Text(stringResource(R.string.sample_text_example))
             }
         )
     }

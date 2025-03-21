@@ -1,18 +1,19 @@
 <resources>
     <string name="app_name">Qarğa dili</string>
-    <string name="no_message_provided">No message provided</string>
-    <string name="qargha_dili_generator">🐦‍⬛ Qarğa Dili Generator 🐦‍⬛</string>
-    <string name="metn_daxil_edin">Mətn daxil edin:</string>
-    <string name="qargha_dili_aciqlamasi">Qarğa dili kodlaşdırılmış və ya şifrəli danışıq üsuludur. Bu dilin əsas məqsədi sözləri elə dəyişməkdir ki, yalnız onu bilən şəxslər anlaya bilsin.</string>
-    <string name="chevir">Çevir</string>
-    <string name="empty_content">Mətn yeri boş ola bilməz</string>
-    <string name="evirilmi_m_tn">Qarğa dilinə çevirilmiş mətn:</string>
-    <string name="qa_qe">qa/qə</string>
-    <string name="za_ze">za/zə</string>
-    <string name="s_n_ist_y_n_olsun">Sən istəyən olsun</string>
-    <string name="bu_i_n_ad_ver_k_indi">Bu işə nə ad verək indi?</string>
-    <string name="nec_d_g_z_l_t_tbiqdir">Məsələn: Necə də gözəl tətbiqdir.</string>
-    <string name="koyalad_n_getdi">Koyaladın getdi</string>
-    <string name="yolla_getsin">Yolla getsin🛫</string>
-    <string name="qar_a_dilind_evirilmi_m_tn_yoxdur">Qarğa dilində çevirilmiş mətn yoxdur</string>
+    <string name="no_message_provided">Heç bir mesaj təqdim olunmayıb</string>
+    <string name="qargha_dili_generator">🐦‍⬛ Qarğa Dili Generatoru 🐦‍⬛</string>
+    <string name="enter_text_prompt">Mətninizi daxil edin:</string>
+    <string name="qargha_dili_description">Qarğa dili, gizli danışıq üsuludur, burada sözlər yalnız bu dilə hakim olan insanlar tərəfindən anlaşıla bilər.</string>
+    <string name="convert_button_label">Çevir</string>
+    <string name="empty_content_error">Mətn sahəsi boş ola bilməz</string>
+    <string name="converted_text_label">Qarğa dilinə çevirilmiş mətn:</string>
+    <string name="qa_qe_example">qa/qə</string>
+    <string name="za_ze_example">za/zə</string>
+    <string name="custom_button_prompt">Sən istəyən olsun</string>
+    <string name="name_task_prompt">Bu işə nə ad verək indi?</string>
+    <string name="sample_text_example">Məsələn: Necə də gözəl tətbiqdir.</string>
+    <string name="copy_success_message">Koyaladın, getdi!</string>
+    <string name="send_button_label">Göndər getsin🛫</string>
+    <string name="no_converted_text_error">Qarğa dilində çevirilmiş mətn yoxdur</string>
+    <string name="no_vowels_error">Mətn içində sait yoxdursa, heç bir dəyişiklik olmayacaq</string>
 </resources>

@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -47,7 +48,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.sp
 import az.lahza.qarghadili.R
 import az.lahza.qarghadili.extensions.empty
 import az.lahza.qarghadili.ui.components.ContentInputField
@@ -61,6 +61,7 @@ import az.lahza.qarghadili.ui.theme.DarkBackground
 import az.lahza.qarghadili.ui.theme.Dimens
 import az.lahza.qarghadili.ui.theme.TextColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.delay
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -92,6 +93,8 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
     var qaButtonClicked by remember { mutableStateOf(true) }
     var zaButtonClicked by remember { mutableStateOf(false) }
     var customButtonClicked by remember { mutableStateOf(false) }
+
+    var buttonClicked by remember { mutableStateOf(false) }
 
     val errorSnackState = rememberSnackState()
     val successSnackState = rememberSnackState()
@@ -126,8 +129,8 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                     CrownLanguageButton(
                         modifier = Modifier.weight(0.5f),
                         enabled = qaButtonClicked,
-                        text = stringResource(R.string.qa_qe),
-                        fontSize = 16.sp,
+                        text = stringResource(R.string.qa_qe_example),
+                        fontSize = Dimens._16SP,
                         onClick = {
                             qaButtonClicked = true
                             zaButtonClicked = false
@@ -137,8 +140,8 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                     CrownLanguageButton(
                         modifier = Modifier.weight(0.5f),
                         enabled = zaButtonClicked,
-                        text = stringResource(R.string.za_ze),
-                        fontSize = 16.sp,
+                        text = stringResource(R.string.za_ze_example),
+                        fontSize = Dimens._16SP,
                         onClick = {
                             zaButtonClicked = true
                             qaButtonClicked = false
@@ -147,8 +150,8 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                     CrownLanguageButton(
                         modifier = Modifier.weight(1f),
                         enabled = customButtonClicked,
-                        text = stringResource(R.string.s_n_ist_y_n_olsun),
-                        fontSize = 16.sp,
+                        text = stringResource(R.string.custom_button_prompt),
+                        fontSize = Dimens._16SP,
                         onClick = {
                             customButtonClicked = true
                             qaButtonClicked = false
@@ -192,17 +195,29 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                             unfocusedTextColor = TextColor
                         ),
                         placeholder = {
-                            Text(stringResource(R.string.bu_i_n_ad_ver_k_indi))
+                            Text(stringResource(R.string.name_task_prompt))
                         }
                     )
                 }
 
 
                 Text(
-                    text = stringResource(R.string.evirilmi_m_tn),
+                    text = stringResource(R.string.converted_text_label),
                     modifier = Modifier.padding(vertical = Dimens.ExtraLarge),
                     style = labelTextStyle,
                 )
+
+                if (buttonClicked) {
+                    // Change color temporarily for 1 second
+                    LaunchedEffect(Unit) {
+                        delay(1000)  // 1 second delay
+                        buttonClicked = false  // Reset the state after 1 second
+                    }
+                }
+
+                val borderColor = if (buttonClicked) AccentGold else BorderGray
+                val labelColor = if (buttonClicked) AccentGold else TextColor
+
 
                 OutlinedTextField(
                     value = crowLanguageText,
@@ -215,10 +230,10 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                         keyboardType = KeyboardType.Text // Make sure to use a text keyboard
                     ),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = AccentGold,
-                        unfocusedBorderColor = BorderGray,
-                        focusedLabelColor = AccentGold,
-                        unfocusedLabelColor = TextColor,
+                        focusedBorderColor = borderColor,
+                        unfocusedBorderColor = borderColor,
+                        focusedLabelColor = labelColor,
+                        unfocusedLabelColor = labelColor,
                         cursorColor = AccentGold,
                         focusedTextColor = TextColor,
                         unfocusedTextColor = TextColor
@@ -238,11 +253,12 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                         modifier = Modifier.weight(0.2f),
                         icon = R.drawable.ic_file_copy,
                         onClick = {
+                            buttonClicked = true
                             if (crowLanguageText.isBlank()) {
-                                errorSnackState.showSnack(context.getString(R.string.qar_a_dilind_evirilmi_m_tn_yoxdur))
+                                errorSnackState.showSnack(context.getString(R.string.no_converted_text_error))
                             } else {
                                 clipboardManager.setText(AnnotatedString(crowLanguageText))
-                                successSnackState.showSnack(context.getString(R.string.koyalad_n_getdi))
+                                successSnackState.showSnack(context.getString(R.string.copy_success_message))
                             }
                         },
                         enabled = crowLanguageText.isNotBlank()
@@ -253,8 +269,9 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                         modifier = Modifier.weight(0.2f),
                         icon = R.drawable.baseline_mic_none_24,
                         onClick = {
+                            buttonClicked = true
                             if (crowLanguageText.isBlank()) {
-                                errorSnackState.showSnack(context.getString(R.string.qar_a_dilind_evirilmi_m_tn_yoxdur))
+                                errorSnackState.showSnack(context.getString(R.string.no_converted_text_error))
                             } else {
                                 val convertedText = convertToTurkish(crowLanguageText)
 
@@ -271,11 +288,12 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
 
                     CrownLanguageButton(
                         modifier = Modifier.weight(0.85f),
-                        text = stringResource(R.string.yolla_getsin),
-                        fontSize = 16.sp,
+                        text = stringResource(R.string.send_button_label),
+                        fontSize = Dimens._16SP,
                         onClick = {
+                            buttonClicked = true
                             if (crowLanguageText.isBlank()) {
-                                errorSnackState.showSnack(context.getString(R.string.qar_a_dilind_evirilmi_m_tn_yoxdur))
+                                errorSnackState.showSnack(context.getString(R.string.no_converted_text_error))
                             } else {
                                 val shareIntent = Intent().apply {
                                     action = Intent.ACTION_SEND
@@ -309,7 +327,7 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                     .padding(vertical = Dimens._32DP, horizontal = Dimens._16DP)
             ) {
                 if (content.isBlank()) {
-                    errorSnackState.showSnack(context.getString(R.string.empty_content))
+                    errorSnackState.showSnack(context.getString(R.string.empty_content_error))
                     crowLanguageText = String.empty()
                 } else {
                     crowLanguageText =
@@ -319,7 +337,9 @@ fun GenerateCrowLanguageScreen(innerPadding: PaddingValues) {
                             qaButtonClicked,
                             zaButtonClicked,
                             customButtonClicked
-                        ) // Update the crowLanguageText
+                        ){
+                            errorSnackState.showSnack(context.getString(R.string.no_vowels_error))
+                        }
                 }
             }
 
@@ -340,7 +360,8 @@ fun convertToCrowLanguage(
     customText: String? = "q",
     qaButtonClicked: Boolean,
     zaButtonClicked: Boolean,
-    customButtonClicked: Boolean
+    customButtonClicked: Boolean,
+    noVowel: (() -> Unit)? = null
 ): String {
     // List of vowels in Azerbaijani language
     val vowels = "aeəoöuüıiAEOUƏÖÜIİ"
@@ -354,16 +375,21 @@ fun convertToCrowLanguage(
         customButtonClicked -> customText
         else -> "q"
     }
+    var foundVowel = false
 
     // Iterate over each character in the text
     for (char in text) {
         if (char.isVowel(vowels)) {
+            foundVowel = true
             // For vowels, append 'q' before and after the vowel
             crowLanguageText.append(char).append(appendString).append(char)
         } else {
             // For consonants, append as is
             crowLanguageText.append(char)
         }
+    }
+    if (!foundVowel) {
+        noVowel?.invoke()
     }
 
     return crowLanguageText.toString()
